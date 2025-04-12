@@ -1,28 +1,31 @@
 #
-import i_dictionaries_sets
-from src.homework.i_dictionaries_sets import get_p_distance_matrix
 
-def get_input_lists():
-    n = int(input("Enter number of DNA strings (<=10): "))
-    dna_lists = []
-    for i in range(n):
-        dna_string = input(f"Enter DNA string {i+1} (ex: TTTC...): ").strip().upper()
-        dna_lists.append(list(dna_string))
-    return dna_lists
-
-def print_matrix(matrix):
-    for row in matrix:
-        print(" ".join(f"{val:.5f}" for val in row))
+import dictionary
 
 def main():
     while True:
-        print("\n1 - Get p distance matrix\n2 - Exit")
+        print("\nInventory Menu")
+        print("1 - Add or Update Item")
+        print("2 - Delete Item")
+        print("3 - Exit")
+
         choice = input("Choose an option: ")
-        if choice == '1':
-            lists = get_input_lists()
-            matrix = get_p_distance_matrix(lists)
-            print_matrix(matrix)
-        elif choice == '2':
+
+        if choice == "1":
+            item = input("Enter item name: ")
+            try:
+                qty = int(input("Enter quantity to add/update: "))
+                dictionary.add_inventory(item, qty)
+                print(f"{item} updated. Current quantity: {dictionary.inventory[item]}")
+            except ValueError:
+                print("Please enter a valid number.")
+        elif choice == "2":
+            item = input("Enter item name to delete: ")
+            if dictionary.remove_inventory_widget(item):
+                print(f"{item} removed from inventory.")
+            else:
+                print(f"{item} not found.")
+        elif choice == "3":
             print("Exiting program.")
             break
         else:

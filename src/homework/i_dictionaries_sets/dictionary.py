@@ -1,14 +1,15 @@
 #
 
-def get_p_distance(list1, list2):
-    differences = sum(1 for a, b in zip(list1, list2) if a != b)
-    return round(differences / len(list1), 5)
+inventory = {}
 
-def get_p_distance_matrix(dna_lists):
-    size = len(dna_lists)
-    matrix = [[0.0 for _ in range(size)] for _ in range(size)]
-    for i in range(size):
-        for j in range(size):
-            if i != j:
-                matrix[i][j] = get_p_distance(dna_lists[i], dna_lists[j])
-    return matrix
+def add_inventory(item_name: str, quantity: int):
+    if item_name in inventory:
+        inventory[item_name] += quantity
+    else:
+        inventory[item_name] = quantity
+
+def remove_inventory_widget(item_name: str):
+    if item_name in inventory:
+        del inventory[item_name]
+        return True
+    return False

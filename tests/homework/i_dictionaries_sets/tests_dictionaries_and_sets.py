@@ -1,26 +1,25 @@
 #
 
 import unittest
-from src.homework.i_dictionaries_sets import get_p_distance, get_p_distance_matrix
+from src.homework.i_dictionaries_sets import dictionary
 
 class Test_Config(unittest.TestCase):
 
-    def test_p_distance(self):
-        list1 = ['T','T','T','C','C','A','T','T','T','A']
-        list2 = ['G','A','T','T','C','A','T','T','T','C'] 
-        self.assertEqual(get_p_distance(list1, list2), 0.4)
+    def test_add_inventory(self):
+        dictionary.add_inventory("Widget1", 10)
+        self.assertEqual(dictionary.inventory["Widget1"], 10)
 
-    def test_get_p_distance_matrix(self):
-        input_lists = [
-            ['T','T','T','C','C','A','T','T','T','A'],
-            ['G','A','T','T','C','A','T','T','T','C'],
-            ['T','T','T','C','C','A','T','T','T','T'],
-            ['G','T','T','C','C','A','T','T','T','A'],
-        ]
-        expected_matrix = [
-            [0.0, 0.4, 0.1, 0.1],
-            [0.4, 0.0, 0.4, 0.3],
-            [0.1, 0.4, 0.0, 0.2],
-            [0.1, 0.3, 0.2, 0.0]
-        ]
-        self.assertEqual(get_p_distance_matrix(input_lists), expected_matrix)
+        dictionary.add_inventory("Widget1", 25)
+        self.assertEqual(dictionary.inventory["Widget1"], 35)
+
+        dictionary.add_inventory("Widget1", -10)
+        self.assertEqual(dictionary.inventory["Widget1"], 25)
+
+    def test_remove_inventory_widget(self):
+        dictionary.add_inventory("Widget1", 10)
+        dictionary.add_inventory("Widget2", 20)
+
+        removed = dictionary.remove_inventory_widget("Widget1")
+        self.assertTrue(removed)
+        self.assertEqual(len(dictionary.inventory), 1)
+        self.assertIn("Widget2", dictionary.inventory)
